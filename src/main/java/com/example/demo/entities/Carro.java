@@ -22,9 +22,9 @@ public class Carro implements Serializable {
     private String  urlImagem;
     private Integer ano;
     @Enumerated(EnumType.STRING)
-    private Cor cor;
+    private Cor     cor;
     @Enumerated(EnumType.STRING)
-    private Tipo tipo;
+    private Tipo    tipo;
     @ManyToOne @JoinColumn(name = "marca")
     private Marca   marca;
 
