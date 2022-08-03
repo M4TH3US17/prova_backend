@@ -17,6 +17,14 @@ public class CarroService {
         return repository.findAll(pageable);
     }
 
+    public Page<Carro> findCarsByYear(Integer ano, Pageable pageable) {
+        return repository.findCarroByAno(ano, pageable);
+    }
+
+    public Page<Carro> findCarsByBrand(String marca, Pageable pageable) {
+        return repository.findCarroByMarca_marcaIgnoreCase(marca, pageable);
+    }
+
     public Carro findById(Long id) {
         return repository.findById(id).get();
     }
