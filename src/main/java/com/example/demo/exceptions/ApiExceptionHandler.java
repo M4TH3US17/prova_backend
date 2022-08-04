@@ -1,15 +1,16 @@
 package com.example.demo.exceptions;
 
 import com.example.demo.exceptions.notfound.*;
+import org.springframework.dao.*;
 import org.springframework.http.*;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.ConstraintViolationException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 @RestControllerAdvice
 public class ApiExceptionHandler {
@@ -34,5 +35,14 @@ public class ApiExceptionHandler {
             map.put(fieldError, err);
         });
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(map);
+    }
+
+    @ExceptionHandler({ConstraintViolationException.class, DataIntegrityViolationException.class, EmptyResultDataAccessException.class})
+    public ResponseEntity<ErrorDetails> violacaoForeignKey(Exception e) {
+        ErrorDetails erro = new ErrorDetails();
+        erro.setStatus(HttpStatus.CONFLICT.value());
+        erro.setTimestamp(LocalDateTime.now().format(formatter));
+        erro.setError("Violação de Foreign Key.");
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(erro);
     }
 }
