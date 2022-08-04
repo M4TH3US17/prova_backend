@@ -9,6 +9,8 @@ import org.springframework.data.domain.*;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @Api("Marca") @RestController
 @CrossOrigin("*")
 @RequestMapping("/api/v1/marcas")
@@ -25,7 +27,7 @@ public class MarcaController {
 
     @ApiOperation("Salva uma nova marca.")
     @PostMapping(value = "/salvar", consumes = "application/json", produces = "application/json")
-    public ResponseEntity<Marca> save(@RequestBody MarcaDTO marcaDTO) {
+    public ResponseEntity<Marca> save(@Valid @RequestBody MarcaDTO marcaDTO) {
         return ResponseEntity.status(HttpStatus.CREATED).body(service.save(marcaDTO));
     }
 }

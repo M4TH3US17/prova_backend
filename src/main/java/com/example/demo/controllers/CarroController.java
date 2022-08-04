@@ -9,6 +9,8 @@ import org.springframework.data.domain.*;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @Api("Carro") @RestController
 @CrossOrigin("*")
 @RequestMapping("/api/v1/carros")
@@ -49,7 +51,7 @@ public class CarroController {
 
     @ApiOperation("Salva um carro.")
     @PostMapping(value = "/salvar", consumes = "application/json", produces = "application/json")
-    public ResponseEntity<Carro> save(@RequestBody CarroDTO carroDTO) {
+    public ResponseEntity<Carro> save(@Valid @RequestBody CarroDTO carroDTO) {
         return ResponseEntity.status(HttpStatus.CREATED).body(service.save(carroDTO));
     }
 

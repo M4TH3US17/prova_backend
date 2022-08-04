@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @Api("API Usuario")
 @RestController @CrossOrigin("*")
 @RequestMapping("/api/v1/usuarios")
@@ -18,7 +20,7 @@ public class UsuarioController {
 
     @ApiOperation("Cadastra Usuário.")
     @PostMapping(value = "/salvar", consumes = "application/json", produces = "application/json")
-    public ResponseEntity<RespostaUsuarioDTO> save(@RequestBody UsuarioDTO usuarioDTO) {
+    public ResponseEntity<RespostaUsuarioDTO> save(@Valid @RequestBody UsuarioDTO usuarioDTO) {
         return ResponseEntity.status(HttpStatus.CREATED).body(service.save(usuarioDTO));
     }
 
