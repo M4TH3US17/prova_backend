@@ -38,7 +38,7 @@ public class CarroController {
 
     @ApiOperation("Busca um carro por id.")
     @GetMapping(value = "/{id}", produces = "application/json")
-    public ResponseEntity<Carro> findAll(@PathVariable Long id) {
+    public ResponseEntity<Carro> findById(@PathVariable Long id) throws Exception {
         return ResponseEntity.ok().body(service.findById(id));
     }
 
@@ -51,13 +51,13 @@ public class CarroController {
 
     @ApiOperation("Salva um carro.")
     @PostMapping(value = "/salvar", consumes = "application/json", produces = "application/json")
-    public ResponseEntity<Carro> save(@Valid @RequestBody CarroDTO carroDTO) {
+    public ResponseEntity<Carro> save(@Valid @RequestBody CarroDTO carroDTO) throws Exception {
         return ResponseEntity.status(HttpStatus.CREATED).body(service.save(carroDTO));
     }
 
     @ApiOperation("Atualiza um carro.")
     @PutMapping(value = "/atualizar/{id}", consumes = "application/json", produces = "application/json")
-    public ResponseEntity<Carro> update(@PathVariable Long id, @RequestBody CarroDTO carroDTO) {
+    public ResponseEntity<Carro> update(@PathVariable Long id, @RequestBody CarroDTO carroDTO) throws Exception {
         return ResponseEntity.ok().body(service.update(id, carroDTO));
     }
 }

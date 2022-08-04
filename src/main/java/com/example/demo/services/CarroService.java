@@ -2,6 +2,8 @@ package com.example.demo.services;
 
 import com.example.demo.entities.*;
 import com.example.demo.entities.dto.CarroDTO;
+import com.example.demo.exceptions.notfound.CarroNotFoundException;
+import com.example.demo.exceptions.notfound.MarcaNotFoundException;
 import com.example.demo.repositories.*;
 import lombok.*;
 import org.springframework.data.domain.*;
@@ -25,11 +27,12 @@ public class CarroService {
         return repository.findCarroByMarca_marcaIgnoreCase(marca, pageable);
     }
 
-    public Carro findById(Long id) {
-        return repository.findById(id).get();
+    public Carro findById(Long id) throws Exception {
+        return repository.findById(id)
+                .orElseThrow(() -> new CarroNotFoundException("Carro com id " + id + " não foi localizado."));
     }
 
-    public Carro save(CarroDTO carroDTO) {
+    public Carro save(CarroDTO carroDTO) throws Exception {
         Carro carro = new Carro();
         updateData(carro, carroDTO);
         return repository.save(carro);
@@ -39,14 +42,16 @@ public class CarroService {
         repository.deleteById(id);
     }
 
-    public Carro update(Long id, CarroDTO carroDTO) {
-        Carro carroDoBanco = repository.findById(id).get();
+    public Carro update(Long id, CarroDTO carroDTO) throws Exception {
+        Carro carroDoBanco = repository.findById(id)
+                .orElseThrow(() -> new CarroNotFoundException("Carro com id " + id + " não foi localizado."));
         updateData(carroDoBanco, carroDTO);
         return repository.save(carroDoBanco);
     }
 
-    private void updateData(Carro carroDoBanco, CarroDTO carroDTO) {
-        Marca marca = marcaRepository.findById(carroDTO.getMarcaId()).get();
+    private void updateData(Carro carroDoBanco, CarroDTO carroDTO) throws Exception {
+        Marca marca = marcaRepository.findById(carroDTO.getMarcaId())
+                .orElseThrow(() -> new MarcaNotFoundException("Marca com id " + carroDTO.getMarcaId() + " não foi localizada."));
 
         carroDoBanco          .setNome(carroDTO.getNome());
         carroDoBanco        .setPreco(carroDTO.getPreco());
