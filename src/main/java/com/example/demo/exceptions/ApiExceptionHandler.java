@@ -3,6 +3,7 @@ package com.example.demo.exceptions;
 import com.example.demo.exceptions.notfound.*;
 import org.springframework.dao.*;
 import org.springframework.http.*;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
@@ -16,6 +17,15 @@ import java.util.*;
 public class ApiExceptionHandler {
 
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+
+    @ExceptionHandler({Exception.class, io.jsonwebtoken.SignatureException.class})
+    protected ResponseEntity<Object> apiErro(Exception ex) {
+
+        ErrorDetails erro = new ErrorDetails(LocalDateTime.now().format(formatter),
+                HttpStatus.NOT_ACCEPTABLE.value(), ex.getLocalizedMessage());
+
+        return new ResponseEntity<>(erro, new HttpHeaders(), HttpStatus.NOT_ACCEPTABLE);
+    }
 
     @ExceptionHandler({CarroNotFoundException.class, MarcaNotFoundException.class})
     public ResponseEntity<ErrorDetails> entidadeNotFoundException(Exception e) {
@@ -44,5 +54,12 @@ public class ApiExceptionHandler {
         erro.setTimestamp(LocalDateTime.now().format(formatter));
         erro.setError("Violação de Foreign Key.");
         return ResponseEntity.status(HttpStatus.CONFLICT).body(erro);
+    }
+
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    protected ResponseEntity<Object> erroDeDescerelizacao(Exception ex){
+        String msg = "Marca ou Cor estão escritas da forma errada.";
+        ErrorDetails erro = new ErrorDetails(LocalDateTime.now().format(formatter), HttpStatus.BAD_REQUEST.value(), msg);
+        return new ResponseEntity<>(erro, new HttpHeaders(), HttpStatus.BAD_REQUEST);
     }
 }
