@@ -36,6 +36,12 @@ public class CarroController {
         return ResponseEntity.ok().body(service.findCarsByYear(ano, pageable));
     }
 
+    @ApiOperation("Retorna uma lista de carros filtrada através do modelo.")
+    @GetMapping(value="/filtro/modelo/{modelo}", produces = "application/json")
+    public ResponseEntity<Page<Carro>> findCarsByModel(@PathVariable("modelo") String modelo, Pageable pageable) {
+        return ResponseEntity.ok().body(service.findCarroByModelo(modelo, pageable));
+    }
+
     @ApiOperation("Busca um carro por id.")
     @GetMapping(value = "/{id}", produces = "application/json")
     public ResponseEntity<Carro> findById(@PathVariable Long id) throws Exception {

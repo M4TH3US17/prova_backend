@@ -21,6 +21,7 @@ public class Carro implements Serializable {
     private Boolean reservado;
     private String  urlImagem;
     private Integer ano;
+    private String  modelo;
     @Enumerated(EnumType.STRING)
     private Cor     cor;
     @Enumerated(EnumType.STRING)
@@ -28,7 +29,7 @@ public class Carro implements Serializable {
     @ManyToOne @JoinColumn(name = "marca")
     private Marca   marca;
 
-    public Carro(String nome, Double preco, Double km, Boolean reservado, String urlImagem, Integer ano, Cor cor, Tipo tipo, Marca marca)
+    public Carro(String nome, Double preco, Double km, Boolean reservado, String urlImagem, Integer ano, Cor cor, Tipo tipo, Marca marca, String modelo)
     {
         this.nome      = nome;
         this.preco     = preco;
@@ -39,5 +40,6 @@ public class Carro implements Serializable {
         this.cor       = cor;
         this.tipo      = tipo;
         this.marca     = marca;
+        this.modelo    = modelo;
     }
 }

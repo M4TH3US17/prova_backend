@@ -26,6 +26,8 @@ public class CarroDTO {
     @NotNull(message  = "{carro.ano.not.null}")
     private Integer ano;
 
+    @NotBlank(message = "{carro.modelo.not.blank}")
+    private String  modelo;
     private Cor     cor;
     private Tipo    tipo;
 

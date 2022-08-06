@@ -8,4 +8,5 @@ public interface CarroRepository extends JpaRepository<Carro, Long> {
 
     Page<Carro> findCarroByAno(Integer ano, Pageable pageable);
     Page<Carro> findCarroByMarca_marcaIgnoreCase(String marca, Pageable pageable);
+    Page<Carro> findCarroByModeloIgnoreCase(String modelo, Pageable pageable);
 }

@@ -27,6 +27,10 @@ public class CarroService {
         return repository.findCarroByMarca_marcaIgnoreCase(marca, pageable);
     }
 
+    public Page<Carro> findCarroByModelo(String modelo, Pageable pageable) {
+        return repository.findCarroByModeloIgnoreCase(modelo, pageable);
+    }
+
     public Carro findById(Long id) throws Exception {
         return repository.findById(id)
                 .orElseThrow(() -> new CarroNotFoundException("Carro com id " + id + " não foi localizado."));
@@ -62,5 +66,6 @@ public class CarroService {
         carroDoBanco                      .setMarca(marca);
         carroDoBanco            .setCor(carroDTO.getCor());
         carroDoBanco          .setTipo(carroDTO.getTipo());
+        carroDoBanco      .setModelo(carroDTO.getModelo());
     }
 }
