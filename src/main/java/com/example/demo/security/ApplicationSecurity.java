@@ -24,11 +24,11 @@ public class ApplicationSecurity {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.csrf().disable().authorizeRequests()
                 .antMatchers(HttpMethod.POST,  "/api/v1/usuarios/**").permitAll()
+                .antMatchers(HttpMethod.GET,    "/api/v1/carros/**").permitAll()
 
                 .antMatchers(HttpMethod.GET,   "/api/v1/marcas/**")      .hasAnyRole("USUARIO", "ADMIN")
                 .antMatchers(HttpMethod.POST,  "/api/v1/marcas/**")      .hasRole("ADMIN")
 
-                .antMatchers(HttpMethod.GET,    "/api/v1/carros/**")     .hasAnyRole("USUARIO", "ADMIN")
                 .antMatchers(HttpMethod.DELETE, "/api/v1/carros/**")     .hasRole("ADMIN")
                 .antMatchers(HttpMethod.PUT,    "/api/v1/carros/**")     .hasRole("ADMIN")
                 .antMatchers(HttpMethod.POST,   "/api/v1/carros/**")     .hasRole("ADMIN")

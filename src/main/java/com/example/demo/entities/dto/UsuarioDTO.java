@@ -9,9 +9,8 @@ import java.io.Serializable;
 public class UsuarioDTO implements Serializable {
 
     @NotBlank(message = "{usuario.login.not.blank}")
-    @Size(min = 2, max = 30, message = "{usuario.login.size}")
     private String login;
 
-    @NotBlank(message = "{usuario.senha.not.null}")
+    @NotBlank(message = "{usuario.senha.not.blank}")
     private String senha;
 }
