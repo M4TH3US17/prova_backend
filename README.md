@@ -16,8 +16,8 @@
 </ul>
 
 <h2>Como Configurar o Projeto?</h2>
-<p>A nossa API está rodando em perfil de teste, na porta <code>8083</code>, e caso queira mudar
-a porta basta acessar o arquivo application-test.properties e alterar o valor 
+<p>A nossa API está pré-configurada rodando em perfil de teste, na porta <code>8083</code>, e caso queira mudar
+a porta (é opcional) basta acessar o arquivo application-test.properties e alterar o valor 
 na propriedade <code>server.port=</code></p>
 
 <h2>Como Acessar a documentação?</h2>
