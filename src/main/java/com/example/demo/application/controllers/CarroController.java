@@ -39,7 +39,7 @@ public class CarroController {
     @GetMapping(value="/filtro/marca/{marca}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> findCarsByBrand(@PathVariable("marca") String marca, Pageable pageable) {
         log.info("CarroController :: Iniciando o processo de busca de carros filtrados por marca - {}", marca);
-        return ResponseEntity.ok().body(service.findCarsByBrand(marca, pageable));
+        return ResponseEntity.ok().body(service.findCarsByBrand(marca));
     }
 
     @SneakyThrows
@@ -47,7 +47,7 @@ public class CarroController {
     @GetMapping(value="/filtro/ano/{ano}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> findCarsByAno(@PathVariable("ano") Integer ano, Pageable pageable) {
         log.info("CarroController :: Iniciando o processo de busca de carros filtrados por ano - {}", ano);
-        return ResponseEntity.ok().body(service.findCarsByYear(ano, pageable));
+        return ResponseEntity.ok().body(service.findCarsByYear(ano));
     }
 
     @SneakyThrows
@@ -55,7 +55,7 @@ public class CarroController {
     @GetMapping(value="/filtro/modelo/{modelo}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> findCarsByModel(@PathVariable("modelo") String modelo, Pageable pageable) {
         log.info("CarroController :: Iniciando o processo de busca de carros filtrados por modelo - {}", modelo);
-        var response = service.findCarroByModelo(modelo, pageable);
+        var response = service.findCarroByModelo(modelo);
         return ResponseEntity.ok().body(response);
     }
 

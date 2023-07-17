@@ -48,19 +48,88 @@ public class CarroService {
         }
     }
 
-    public Page<Carro> findCarsByYear(Integer ano, Pageable pageable) {
-        log.info("CarroService :: Obtendo todos os carros cadastrados no ano { } ...", ano);
-        return repository.findCarroByAno(ano, pageable);
+    public CarroResponse findCarsByYear(Integer ano) {
+        try {
+            log.info("CarroService :: Obtendo todos os carros cadastrados no ano { } ...", ano);
+            List<Carro> listaDeCarros = repository.findCarroByAno(ano);
+
+            if (listaDeCarros.isEmpty()) {
+                log.info("CarroService :: Nao foi encontrado nenhum carro cadastrado no ano { }.", ano);
+                return CarroResponse.builder()
+                        .code(HttpStatus.NOT_FOUND.value())
+                        .message("Carro nao localizado!")
+                        .build();
+            } else {
+                log.info("CarroService :: Montando lista...");
+                return CarroResponse.builder()
+                        .code(HttpStatus.OK.value())
+                        .message("Segue a lista de carros encontrados!")
+                        .data(listaDeCarros)
+                        .build();
+            }
+        } catch (Exception error) {
+            log.error("ERROR: " + error);
+            return CarroResponse.builder()
+                    .code(HttpStatus.INTERNAL_SERVER_ERROR.value())
+                    .message("Houve um erro no servidor!")
+                    .build();
+        }
     }
 
-    public Page<Carro> findCarsByBrand(String marca, Pageable pageable) {
-        log.info("CarroService :: Obtendo todos os carros da marca no ano { } ...", marca);
-        return repository.findCarroByMarca_marcaIgnoreCase(marca, pageable);
+    public CarroResponse findCarsByBrand(String marca) {
+        try {
+            log.info("CarroService :: Obtendo todos os carros da marca no ano { } ...", marca);
+            List<Carro> listaDeCarros = repository.findCarroByMarca_marcaIgnoreCase(marca);
+
+            if (listaDeCarros.isEmpty()) {
+                log.info("CarroService :: Nao foi encontrado nenhum carro cuja marca seja { }.", marca);
+                return CarroResponse.builder()
+                        .code(HttpStatus.NOT_FOUND.value())
+                        .message("Carro nao localizado!")
+                        .build();
+            } else {
+                log.info("CarroService :: Montando lista...");
+                return CarroResponse.builder()
+                        .code(HttpStatus.OK.value())
+                        .message("Segue a lista de carros encontrados!")
+                        .data(listaDeCarros)
+                        .build();
+            }
+        } catch (Exception error) {
+            log.error("ERROR: " + error);
+            return CarroResponse.builder()
+                    .code(HttpStatus.INTERNAL_SERVER_ERROR.value())
+                    .message("Houve um erro no servidor!")
+                    .build();
+        }
     }
 
-    public Page<Carro> findCarroByModelo(String modelo, Pageable pageable) {
-        log.info("CarroService :: Obtendo todos os carros do modelo { } ...", modelo);
-        return repository.findCarroByModeloIgnoreCase(modelo, pageable);
+    public CarroResponse findCarroByModelo(String modelo) {
+        try {
+            log.info("CarroService :: Obtendo todos os carros do modelo { } ...", modelo);
+            List<Carro> listaDeCarros = repository.findCarroByModeloIgnoreCase(modelo);
+
+            if (listaDeCarros.isEmpty()) {
+                log.info("CarroService :: Nao foi encontrado nenhum carro cujo modelo seja { }.", modelo);
+                return CarroResponse.builder()
+                        .code(HttpStatus.NOT_FOUND.value())
+                        .message("Carro nao localizado!")
+                        .build();
+            } else {
+                log.info("CarroService :: Montando lista...");
+                return CarroResponse.builder()
+                        .code(HttpStatus.OK.value())
+                        .message("Segue a lista de carros encontrados!")
+                        .data(listaDeCarros)
+                        .build();
+            }
+        } catch (Exception error) {
+            log.error("ERROR: " + error);
+            return CarroResponse.builder()
+                    .code(HttpStatus.INTERNAL_SERVER_ERROR.value())
+                    .message("Houve um erro no servidor!")
+                    .build();
+        }
     }
 
     public CarroResponse findById(Long id) throws Exception {
