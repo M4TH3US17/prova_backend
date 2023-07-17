@@ -2,13 +2,7 @@ package com.example.demo.utils.carros;
 
 import com.example.demo.application.dto.CarroDTO;
 import com.example.demo.domain.entities.Carro;
-import com.example.demo.domain.entities.Marca;
-import com.example.demo.infrastructure.request.carros.RegisterCarroRequest;
-import com.example.demo.infrastructure.request.carros.UpdateCarroRequest;
-import com.example.demo.infrastructure.response.carros.CarroResponse;
-
-import java.util.List;
-import java.util.stream.Collectors;
+import com.example.demo.infrastructure.request.carros.*;
 
 public class CarroUtils {
 
@@ -23,7 +17,6 @@ public class CarroUtils {
                 .nome(update.getNome())
                 .km(update.getKm())
                 .cor(update.getCor())
-                .marca(new Marca(1L, "a"))
                 .preco(update.getPreco())
                 .tipo(update.getTipo())
                 .modelo(update.getModelo())
@@ -53,6 +46,10 @@ public class CarroUtils {
                 .build();
     }
 
+    /**
+     * Monta um objeto Carro a partir de uma entidade RegisterCarroRequest
+     * @return Carro
+     * */
     public static Carro makeCarroCreatedEntity(RegisterCarroRequest carro) {
         return Carro.builder()
                 .nome(carro.getNome())

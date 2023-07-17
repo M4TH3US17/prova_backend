@@ -2,25 +2,20 @@ package com.example.demo.application.services;
 
 import com.example.demo.application.dto.CarroDTO;
 import com.example.demo.application.exceptions.notfound.CarroNotFoundException;
-import com.example.demo.application.exceptions.notfound.MarcaNotFoundException;
 import com.example.demo.domain.entities.Carro;
 import com.example.demo.domain.entities.Marca;
-import com.example.demo.domain.repositories.CarroRepository;
-import com.example.demo.domain.repositories.MarcaRepository;
-import com.example.demo.infrastructure.request.carros.RegisterCarroRequest;
-import com.example.demo.infrastructure.request.carros.UpdateCarroRequest;
+import com.example.demo.domain.repositories.*
+import com.example.demo.infrastructure.request.carros.*;
 import com.example.demo.infrastructure.response.carros.CarroResponse;
 import com.example.demo.utils.carros.CarroUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service @RequiredArgsConstructor @Slf4j
 public class CarroService {
@@ -162,16 +157,16 @@ public class CarroService {
     @Transactional
     public CarroResponse save(RegisterCarroRequest request) throws Exception {
         try {
-            log.info("CarroService :: Iniciando etapa de persistencia de nova carro...");
+            log.info("CarroService :: Iniciando etapa de persistencia...");
             Carro carro = CarroUtils.makeCarroCreatedEntity(request);
             log.info("CarroService :: Salvando carro...");
+            insereMarcaDoCarro(carro, request.getMarcaId());
             CarroDTO carroDTO = CarroUtils.makeCarroDTOByEntity(repository.save(carro));
             log.info("CarroService :: Carro cadastrado com sucesso!");
 
             return CarroResponse.builder()
                     .code(HttpStatus.CREATED.value())
                     .message("Carro salvo com sucesso!")
-                    .data(carroDTO)
                     .build();
         } catch(Exception error) {
             log.error("ERROR: " + error.getLocalizedMessage());
@@ -193,6 +188,7 @@ public class CarroService {
             log.info("CarroService :: Carro encontrado na base de dados...");
             Carro carro = CarroUtils.makeCarroUpdatedEntity(request, carroDoBanco);
             log.info("CarroService :: Salvando carro atualizado...");
+            insereMarcaDoCarro(carro, request.getMarcaId());
             CarroDTO carroDTO = CarroUtils.makeCarroDTOByEntity(repository.save(carro));
             log.info("CarroService :: Carro atualizado com sucesso!");
 
@@ -210,4 +206,14 @@ public class CarroService {
     }
     }
 
+    private void insereMarcaDoCarro(Carro carro, Long idMarca){
+        log.info("CarroService :: Inserindo marca de id {} no carro...", idMarca);
+        Optional<Marca> marca = marcaRepository.findById(idMarca);
+        if(marca.get() != null) {
+            log.info("CarroService :: Marca localizada!");
+            carro.setMarca(marca.get());
+        } else {
+            log.error("ERROR: Marca nao foi localizada!");
+        }
+    }
 }
