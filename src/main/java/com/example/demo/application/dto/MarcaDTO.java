@@ -12,6 +12,8 @@ import javax.validation.constraints.NotBlank;
 @Builder @JsonInclude(JsonInclude.Include.NON_NULL)
 public class MarcaDTO {
 
+    private Long id;
+
     @NotBlank(message = "{marca.nome.not.blank}")
     private String marca;
 
