@@ -1,7 +1,6 @@
 package com.example.demo.application.services;
 
 import com.example.demo.application.dto.CarroDTO;
-import com.example.demo.application.exceptions.notfound.CarroNotFoundException;
 import com.example.demo.domain.entities.Carro;
 import com.example.demo.domain.entities.Marca;
 import com.example.demo.domain.repositories.*;
@@ -10,7 +9,6 @@ import com.example.demo.infrastructure.response.carros.CarroResponse;
 import com.example.demo.utils.carros.CarroUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -23,7 +21,7 @@ public class CarroService {
     private final CarroRepository repository;
     private final MarcaRepository marcaRepository;
 
-    public CarroResponse findAllCars(Pageable pageable) {
+    public CarroResponse findAllCars() {
         log.info("CarroService :: Obtendo todos os carros cadastrados no sistema...");
         List<Carro> listaDeCarros =  repository.findAllByDisabledFalseOrderByIdDesc();
 

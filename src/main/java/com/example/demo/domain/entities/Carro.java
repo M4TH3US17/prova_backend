@@ -30,18 +30,4 @@ public class Carro implements Serializable {
     @ManyToOne @JoinColumn(name = "marca")
     private Marca marca;
     private Boolean disabled;
-
-   /* public Carro(String nome, Double preco, Double km, Boolean reservado, String urlImagem, Integer ano, Cor cor, Tipo tipo, Marca marca, String modelo)
-    {
-        this.nome      = nome;
-        this.preco     = preco;
-        this.km        = km;
-        this.reservado = reservado;
-        this.urlImagem = urlImagem;
-        this.ano       = ano;
-        this.cor       = cor;
-        this.tipo      = tipo;
-        this.marca     = marca;
-        this.modelo    = modelo;
-    }*/
 }

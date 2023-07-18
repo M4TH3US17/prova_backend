@@ -25,7 +25,7 @@ public class CarroController {
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> findAll(Pageable pageable) {
         log.info("CarroController :: Iniciando o processo de obtençao de todos os carros cadastrados no sistema...");
-        return ResponseEntity.ok().body(service.findAllCars(pageable));
+        return ResponseEntity.ok().body(service.findAllCars());
     }
     @SneakyThrows
     @ApiOperation("Retorna uma lista de carros filtrada através do nome da marca.")

@@ -22,6 +22,7 @@ public class CarroUtils {
                 .modelo(update.getModelo())
                 .reservado(update.getReservado())
                 .urlImagem(update.getUrlImagem())
+                .disabled(false)
                 .build();
 
         return carroDTO;
@@ -62,7 +63,7 @@ public class CarroUtils {
                 .reservado(carro.getReservado())
                 .urlImagem(carro.getUrlImagem())
                 .km(carro.getKm())
-                .disabled(true)
+                .disabled(false)
                 .build();
     }
 }
