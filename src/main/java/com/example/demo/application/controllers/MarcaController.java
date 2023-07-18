@@ -28,7 +28,7 @@ public class MarcaController {
     @SneakyThrows
     @ApiOperation("Retorna uma lista paginada de marcas.")
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Page<Marca>> findAll(Pageable pageable) {
+    public ResponseEntity<?> findAll(Pageable pageable) {
         log.info("MarcaController :: Iniciando o processo de obtençao de todos os modelos cadastrados no sistema...");
         var response = service.findAll(pageable);
         return ResponseEntity.ok().body(response);
@@ -37,7 +37,7 @@ public class MarcaController {
     @SneakyThrows
     @ApiOperation("Salva uma nova marca.")
     @PostMapping(value = "/salvar", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Marca> save(@Valid @RequestBody MarcaDTO marcaDTO) {
+    public ResponseEntity<?> save(@Valid @RequestBody MarcaDTO marcaDTO) {
         log.info("MarcaController :: Iniciando o processo de salvamento de uma nova marca...");
         var response = service.save(marcaDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);

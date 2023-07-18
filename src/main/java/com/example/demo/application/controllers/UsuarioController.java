@@ -27,7 +27,7 @@ public class UsuarioController {
     @SneakyThrows
     @ApiOperation("Cadastra Usuário.")
     @PostMapping(value = "/salvar", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<RespostaUsuarioDTO> save(@Valid @RequestBody UsuarioDTO usuarioDTO) {
+    public ResponseEntity<?> save(@Valid @RequestBody UsuarioDTO usuarioDTO) {
         log.info("UsuarioController :: Iniciando o processo de cadastramento de um novo usuario no sistema...");
         var response = service.save(usuarioDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
@@ -36,7 +36,7 @@ public class UsuarioController {
     @SneakyThrows
     @ApiOperation("Autentica Usuário.")
     @PostMapping(value = "/login", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<RespostaDeLogin> login(@RequestBody UsuarioDTO usuarioDTO) {
+    public ResponseEntity<?> login(@RequestBody UsuarioDTO usuarioDTO) {
         log.info("UsuarioController :: Iniciando o processo de autenticacao no sistema...");
         var response = service.login(usuarioDTO);
         return ResponseEntity.ok().body(response);

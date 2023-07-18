@@ -1,20 +1,13 @@
 package com.example.demo.application.controllers;
 
-import com.example.demo.application.dto.CarroDTO;
 import com.example.demo.application.services.CarroService;
-import com.example.demo.domain.entities.Carro;
-import com.example.demo.infrastructure.request.carros.RegisterCarroRequest;
-import com.example.demo.infrastructure.request.carros.UpdateCarroRequest;
-import com.example.demo.infrastructure.response.carros.CarroResponse;
+import com.example.demo.infrastructure.request.carros.*;
 import io.swagger.annotations.*;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -73,8 +66,8 @@ public class CarroController {
     @DeleteMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> delete(@PathVariable Long id) {
         log.info("CarroController :: Iniciando o processo de desativacao do carro de ID - {}", id);
-        service.delete(id);
-        return ResponseEntity.ok().build();
+        var response = service.delete(id);
+        return ResponseEntity.ok().body(response);
     }
 
     @SneakyThrows

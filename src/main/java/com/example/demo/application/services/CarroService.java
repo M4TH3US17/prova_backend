@@ -177,9 +177,15 @@ public class CarroService {
         }
     }
 
-    public void delete(Long id) {
+    public CarroResponse delete(Long id) {
         Carro carro = repository.findById(id).get();
         carro.setDisabled(true);
+        repository.save(carro);
+        log.info("CarroService :: Carro desativado com sucesso!");
+        return CarroResponse.builder()
+                .code(HttpStatus.OK.value())
+                .message("Carro excluido com sucesso!")
+                .build();
     }
 
     @Transactional
