@@ -43,6 +43,7 @@ public class CarroUtils {
                 .urlImagem(carro.getUrlImagem())
                 .km(carro.getKm())
                 .marcaId(carro.getMarca().getId())
+                .disabled(carro.getDisabled())
                 .build();
     }
 
@@ -61,7 +62,7 @@ public class CarroUtils {
                 .reservado(carro.getReservado())
                 .urlImagem(carro.getUrlImagem())
                 .km(carro.getKm())
-                .marca(null)
+                .disabled(true)
                 .build();
     }
 }

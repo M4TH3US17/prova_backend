@@ -29,8 +29,9 @@ public class Carro implements Serializable {
     private Tipo tipo;
     @ManyToOne @JoinColumn(name = "marca")
     private Marca marca;
+    private Boolean disabled;
 
-    public Carro(String nome, Double preco, Double km, Boolean reservado, String urlImagem, Integer ano, Cor cor, Tipo tipo, Marca marca, String modelo)
+   /* public Carro(String nome, Double preco, Double km, Boolean reservado, String urlImagem, Integer ano, Cor cor, Tipo tipo, Marca marca, String modelo)
     {
         this.nome      = nome;
         this.preco     = preco;
@@ -42,5 +43,5 @@ public class Carro implements Serializable {
         this.tipo      = tipo;
         this.marca     = marca;
         this.modelo    = modelo;
-    }
+    }*/
 }

@@ -4,7 +4,7 @@ import com.example.demo.application.dto.CarroDTO;
 import com.example.demo.application.exceptions.notfound.CarroNotFoundException;
 import com.example.demo.domain.entities.Carro;
 import com.example.demo.domain.entities.Marca;
-import com.example.demo.domain.repositories.*
+import com.example.demo.domain.repositories.*;
 import com.example.demo.infrastructure.request.carros.*;
 import com.example.demo.infrastructure.response.carros.CarroResponse;
 import com.example.demo.utils.carros.CarroUtils;
@@ -25,7 +25,7 @@ public class CarroService {
 
     public CarroResponse findAllCars(Pageable pageable) {
         log.info("CarroService :: Obtendo todos os carros cadastrados no sistema...");
-        List<Carro> listaDeCarros =  repository.findAll();
+        List<Carro> listaDeCarros =  repository.findAllByDisabledFalseOrderByIdDesc();
 
         if (listaDeCarros.isEmpty()){
             log.info("CarroService :: Nao há carros cadastrados!");
@@ -46,7 +46,7 @@ public class CarroService {
     public CarroResponse findCarsByYear(Integer ano) {
         try {
             log.info("CarroService :: Obtendo todos os carros cadastrados no ano { } ...", ano);
-            List<Carro> listaDeCarros = repository.findCarroByAno(ano);
+            List<Carro> listaDeCarros = repository.findCarroByAnoAndDisabledFalse(ano);
 
             if (listaDeCarros.isEmpty()) {
                 log.info("CarroService :: Nao foi encontrado nenhum carro cadastrado no ano { }.", ano);
@@ -74,7 +74,7 @@ public class CarroService {
     public CarroResponse findCarsByBrand(String marca) {
         try {
             log.info("CarroService :: Obtendo todos os carros da marca no ano { } ...", marca);
-            List<Carro> listaDeCarros = repository.findCarroByMarca_marcaIgnoreCase(marca);
+            List<Carro> listaDeCarros = repository.findCarroByMarca_marcaIgnoreCaseAndDisabledFalse(marca);
 
             if (listaDeCarros.isEmpty()) {
                 log.info("CarroService :: Nao foi encontrado nenhum carro cuja marca seja { }.", marca);
@@ -102,7 +102,7 @@ public class CarroService {
     public CarroResponse findCarroByModelo(String modelo) {
         try {
             log.info("CarroService :: Obtendo todos os carros do modelo { } ...", modelo);
-            List<Carro> listaDeCarros = repository.findCarroByModeloIgnoreCase(modelo);
+            List<Carro> listaDeCarros = repository.findCarroByModeloIgnoreCaseAndDisabledFalse(modelo);
 
             if (listaDeCarros.isEmpty()) {
                 log.info("CarroService :: Nao foi encontrado nenhum carro cujo modelo seja { }.", modelo);
@@ -130,7 +130,7 @@ public class CarroService {
     public CarroResponse findById(Long id) throws Exception {
         try {
             log.info("CarroService :: Obtendo carro pelo id passado...");
-            Optional<Carro> carro = repository.findById(id);
+            Optional<Carro> carro = repository.findByIdAndDisabledFalse(id);
 
             if (carro.isPresent()) {
                 log.info("CarroService :: Carro encontrado na base de dados!");
@@ -178,15 +178,25 @@ public class CarroService {
     }
 
     public void delete(Long id) {
-        repository.deleteById(id);
+        Carro carro = repository.findById(id).get();
+        carro.setDisabled(true);
     }
 
     @Transactional
     public CarroResponse update(Long id, UpdateCarroRequest request) throws Exception {
         try {
-            Carro carroDoBanco = repository.findById(id).orElseThrow(() -> new CarroNotFoundException("Carro com id " + id + " não foi localizado."));
+            Optional<Carro> carroDoBanco = repository.findByIdAndDisabledFalse(id);
+
+            if (carroDoBanco.isPresent() == false ) {
+                log.info("CarroService :: Carro nao localizado na base de dados!");
+               return CarroResponse.builder()
+                        .code(HttpStatus.NOT_FOUND.value())
+                        .message("Carro nao localizado na base de dados!!")
+                        .build();
+            }
+
             log.info("CarroService :: Carro encontrado na base de dados...");
-            Carro carro = CarroUtils.makeCarroUpdatedEntity(request, carroDoBanco);
+            Carro carro = CarroUtils.makeCarroUpdatedEntity(request, carroDoBanco.get());
             log.info("CarroService :: Salvando carro atualizado...");
             insereMarcaDoCarro(carro, request.getMarcaId());
             CarroDTO carroDTO = CarroUtils.makeCarroDTOByEntity(repository.save(carro));

@@ -40,4 +40,6 @@ public class CarroDTO {
 
     @NotNull(message  = "{carro.marcaId.not.null}")
     private Long    marcaId;
+
+    private Boolean disabled;
 }

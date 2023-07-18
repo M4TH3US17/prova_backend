@@ -63,7 +63,7 @@ public class CarroController {
     @ApiOperation("Busca um carro por id.")
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> findById(@PathVariable Long id) throws Exception {
-        log.info("CarroController :: Iniciando o processo de busca de carro por id - {}", id);
+        log.info("CarroController :: Iniciando o processo de busca de carro por ID - {}", id);
         var response = service.findById(id);
         return ResponseEntity.ok().body(response);
     }
@@ -71,8 +71,8 @@ public class CarroController {
     @SneakyThrows
     @ApiOperation("Deleta um carro por id.")
     @DeleteMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
-        log.info("CarroController :: Iniciando o processo de excluir carro que possui id - {}", id);
+    public ResponseEntity<?> delete(@PathVariable Long id) {
+        log.info("CarroController :: Iniciando o processo de desativacao do carro de ID - {}", id);
         service.delete(id);
         return ResponseEntity.ok().build();
     }
@@ -80,7 +80,7 @@ public class CarroController {
     @SneakyThrows
     @ApiOperation("Salva um carro.")
     @PostMapping(value = "/salvar", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<CarroResponse> save(@Valid @RequestBody RegisterCarroRequest request) throws Exception {
+    public ResponseEntity<?> save(@Valid @RequestBody RegisterCarroRequest request) throws Exception {
         log.info("CarroController :: Iniciando o processo de cadastro de um novo carro...");
         var response = service.save(request);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
@@ -89,8 +89,8 @@ public class CarroController {
     @SneakyThrows
     @ApiOperation("Atualiza um carro.")
     @PutMapping(value = "/atualizar/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<CarroResponse> update(@PathVariable Long id, @RequestBody UpdateCarroRequest request) throws Exception {
-        log.info("CarroController :: Iniciando o processo de ediçao do carro de id {}", id);
+    public ResponseEntity<?> update(@PathVariable Long id, @RequestBody UpdateCarroRequest request) throws Exception {
+        log.info("CarroController :: Iniciando o processo de ediçao do carro de ID {}", id);
         var response = service.update(id, request);
         return ResponseEntity.ok().body(response);
     }
