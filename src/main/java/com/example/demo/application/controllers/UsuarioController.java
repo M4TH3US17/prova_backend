@@ -1,9 +1,8 @@
 package com.example.demo.application.controllers;
 
 import com.example.demo.application.services.UsuarioService;
-import com.example.demo.config.security.jwt.RespostaDeLogin;
-import com.example.demo.domain.entities.dto.RespostaUsuarioDTO;
-import com.example.demo.domain.entities.dto.UsuarioDTO;
+import com.example.demo.infrastructure.request.usuarios.AutenticateRequest;
+import com.example.demo.infrastructure.request.usuarios.RegisterUsuarioRequest;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -27,18 +26,18 @@ public class UsuarioController {
     @SneakyThrows
     @ApiOperation("Cadastra Usuário.")
     @PostMapping(value = "/salvar", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> save(@Valid @RequestBody UsuarioDTO usuarioDTO) {
+    public ResponseEntity<?> save(@Valid @RequestBody RegisterUsuarioRequest request) {
         log.info("UsuarioController :: Iniciando o processo de cadastramento de um novo usuario no sistema...");
-        var response = service.save(usuarioDTO);
+        var response = service.save(request);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
     @SneakyThrows
     @ApiOperation("Autentica Usuário.")
     @PostMapping(value = "/login", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> login(@RequestBody UsuarioDTO usuarioDTO) {
+    public ResponseEntity<?> login(@RequestBody AutenticateRequest autenticateRequest) {
         log.info("UsuarioController :: Iniciando o processo de autenticacao no sistema...");
-        var response = service.login(usuarioDTO);
+        var response = service.login(autenticateRequest);
         return ResponseEntity.ok().body(response);
     }
 }
