@@ -25,22 +25,22 @@ public class CarroController {
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> findAll(Pageable pageable) {
         log.info("CarroController :: Iniciando o processo de obtençao de todos os carros cadastrados no sistema...");
-        return ResponseEntity.ok().body(service.findAllCars());
+        return ResponseEntity.ok().body(service.findAllCars(pageable));
     }
     @SneakyThrows
     @ApiOperation("Retorna uma lista de carros filtrada através do nome da marca.")
     @GetMapping(value="/filtro/marca/{marca}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> findCarsByBrand(@PathVariable("marca") String marca, Pageable pageable) {
         log.info("CarroController :: Iniciando o processo de busca de carros filtrados por marca - {}", marca);
-        return ResponseEntity.ok().body(service.findCarsByBrand(marca));
+        return ResponseEntity.ok().body(service.findCarsByBrand(marca, pageable));
     }
 
     @SneakyThrows
     @ApiOperation("Retorna uma lista de carros filtrada através do ano.")
     @GetMapping(value="/filtro/ano/{ano}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> findCarsByAno(@PathVariable("ano") Integer ano, Pageable pageable) {
-        log.info("CarroController :: Iniciando o processo de busca de carros filtrados por ano - {}", ano);
-        return ResponseEntity.ok().body(service.findCarsByYear(ano));
+        log.info("CarroController :: Iniciando o processo de busca de carros filtrados por ano", ano);
+        return ResponseEntity.ok().body(service.findCarsByYear(ano, pageable));
     }
 
     @SneakyThrows
@@ -48,7 +48,7 @@ public class CarroController {
     @GetMapping(value="/filtro/modelo/{modelo}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> findCarsByModel(@PathVariable("modelo") String modelo, Pageable pageable) {
         log.info("CarroController :: Iniciando o processo de busca de carros filtrados por modelo - {}", modelo);
-        var response = service.findCarroByModelo(modelo);
+        var response = service.findCarroByModelo(modelo, pageable);
         return ResponseEntity.ok().body(response);
     }
 

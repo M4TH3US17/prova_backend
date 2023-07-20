@@ -1,19 +1,21 @@
 package com.example.demo.domain.repositories;
 
 import com.example.demo.domain.entities.Carro;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 import java.util.Optional;
 
 public interface CarroRepository extends JpaRepository<Carro, Long> {
-    List<Carro> findAllByDisabledFalseOrderByIdDesc();
+    Page<Carro> findAllByDisabledFalse(Pageable pageable);
 
-    List<Carro> findCarroByAnoAndDisabledFalse(Integer ano);
+    Page<Carro> findCarroByAnoAndDisabledFalse(Integer ano, Pageable pageable);
 
-    List<Carro> findCarroByMarca_marcaIgnoreCaseAndDisabledFalse(String marca);
+    Page<Carro> findCarroByMarca_marcaIgnoreCaseAndDisabledFalse(String marca, Pageable pageable);
 
-    List<Carro> findCarroByModeloIgnoreCaseAndDisabledFalse(String modelo);
+    Page<Carro> findCarroByModeloIgnoreCaseAndDisabledFalse(String modelo, Pageable pageable);
 
     Optional<Carro> findByIdAndDisabledFalse(Long id);
 }
