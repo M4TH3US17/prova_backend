@@ -49,7 +49,7 @@ public class CarroService {
             Page<Carro> listaDeCarros = repository.findCarroByAnoAndDisabledFalse(ano, pageable);
 
             if (listaDeCarros.isEmpty()) {
-                log.info("CarroService :: Nao foi encontrado nenhum carro cadastrado no ano { }.", ano);
+                log.info("CarroService :: Nao foi encontrado nenhum carro cadastrado no ano {}.", ano);
                 return CarroResponse.builder()
                         .code(HttpStatus.NOT_FOUND.value())
                         .message("Carro nao localizado!")
@@ -73,17 +73,17 @@ public class CarroService {
 
     public CarroResponse findCarsByBrand(String marca, Pageable pageable) {
         try {
-            log.info("CarroService :: Obtendo todos os carros da marca no ano { } ...", marca);
+            log.info("CarroService :: Obtendo todos os carros da marca {} ...", marca);
             Page<Carro> listaDeCarros = repository.findCarroByMarca_marcaIgnoreCaseAndDisabledFalse(marca, pageable);
 
             if (listaDeCarros.isEmpty()) {
-                log.info("CarroService :: Nao foi encontrado nenhum carro cuja marca seja { }.", marca);
+                log.info("CarroService :: Nao foi encontrado nenhum carro cuja marca seja {}.", marca);
                 return CarroResponse.builder()
                         .code(HttpStatus.NOT_FOUND.value())
                         .message("Carro nao localizado!")
                         .build();
             } else {
-                log.info("CarroService :: Montando lista...");
+                log.info("CarroService :: Carros encontrados com sucesso!.");
                 return CarroResponse.builder()
                         .code(HttpStatus.OK.value())
                         .message("Segue a lista de carros encontrados!")
@@ -101,17 +101,17 @@ public class CarroService {
 
     public CarroResponse findCarroByModelo(String modelo, Pageable pageable) {
         try {
-            log.info("CarroService :: Obtendo todos os carros do modelo { } ...", modelo);
+            log.info("CarroService :: Obtendo todos os carros do modelo {} ...", modelo);
             Page<Carro> listaDeCarros = repository.findCarroByModeloIgnoreCaseAndDisabledFalse(modelo, pageable);
 
             if (listaDeCarros.isEmpty()) {
-                log.info("CarroService :: Nao foi encontrado nenhum carro cujo modelo seja { }.", modelo);
+                log.info("CarroService :: Nao foi encontrado nenhum carro cujo modelo seja {}.", modelo);
                 return CarroResponse.builder()
                         .code(HttpStatus.NOT_FOUND.value())
-                        .message("Carro nao localizado!")
+                        .message("Carros nao localizados!")
                         .build();
             } else {
-                log.info("CarroService :: Montando lista...");
+                log.info("CarroService :: Carros encontrados com sucesso!");
                 return CarroResponse.builder()
                         .code(HttpStatus.OK.value())
                         .message("Segue a lista de carros encontrados!")

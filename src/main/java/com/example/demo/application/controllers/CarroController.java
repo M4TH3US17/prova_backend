@@ -31,7 +31,7 @@ public class CarroController {
     @ApiOperation("Retorna uma lista de carros filtrada através do nome da marca.")
     @GetMapping(value="/filtro/marca/{marca}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> findCarsByBrand(@PathVariable("marca") String marca, Pageable pageable) {
-        log.info("CarroController :: Iniciando o processo de busca de carros filtrados por marca - {}", marca);
+        log.info("CarroController :: Iniciando o processo de busca de carros filtrados por marca", marca);
         return ResponseEntity.ok().body(service.findCarsByBrand(marca, pageable));
     }
 
@@ -47,7 +47,7 @@ public class CarroController {
     @ApiOperation("Retorna uma lista de carros filtrada através do modelo.")
     @GetMapping(value="/filtro/modelo/{modelo}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> findCarsByModel(@PathVariable("modelo") String modelo, Pageable pageable) {
-        log.info("CarroController :: Iniciando o processo de busca de carros filtrados por modelo - {}", modelo);
+        log.info("CarroController :: Iniciando o processo de busca de carros filtrados por modelo", modelo);
         var response = service.findCarroByModelo(modelo, pageable);
         return ResponseEntity.ok().body(response);
     }
@@ -56,7 +56,7 @@ public class CarroController {
     @ApiOperation("Busca um carro por id.")
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> findById(@PathVariable Long id) throws Exception {
-        log.info("CarroController :: Iniciando o processo de busca de carro por ID - {}", id);
+        log.info("CarroController :: Iniciando o processo de busca de carro por ID {}", id);
         var response = service.findById(id);
         return ResponseEntity.ok().body(response);
     }
@@ -65,7 +65,7 @@ public class CarroController {
     @ApiOperation("Deleta um carro por id.")
     @DeleteMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> delete(@PathVariable Long id) {
-        log.info("CarroController :: Iniciando o processo de desativacao do carro de ID - {}", id);
+        log.info("CarroController :: Iniciando o processo de desativacao do carro de ID {}", id);
         var response = service.delete(id);
         return ResponseEntity.ok().body(response);
     }
