@@ -39,7 +39,7 @@ public class CarroDTO {
     private Tipo tipo;
 
     @NotNull(message  = "{carro.marcaId.not.null}")
-    private Long    marcaId;
+    private MarcaDTO    marca;
 
     private Boolean disabled;
 }

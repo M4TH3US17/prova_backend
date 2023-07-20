@@ -42,7 +42,7 @@ public class MarcaService {
             log.info("MarcaService :: Iniciando etapa de persistencia...");
             Marca marca = MarcaUtils.makeMarcaCreatedEntity(request);
             log.info("MarcaService :: Cadastrando no banco...");
-            MarcaDTO marcaDTO = MarcaUtils.makeCarroDTOByEntity(repository.save(marca));
+            MarcaDTO marcaDTO = MarcaUtils.makeMarcaDTOByEntity(repository.save(marca));
             log.info("MarcaService :: Marca {} salva no banco de dados!", request.getMarca());
 
             return MarcaResponse.builder()

@@ -16,8 +16,15 @@ public class MarcaUtils {
                 .build();
     }
 
-    public static MarcaDTO makeCarroDTOByEntity(Marca request) {
+    public static MarcaDTO makeMarcaDTOByEntity(Marca request) {
         return MarcaDTO.builder()
+                .id(request.getId())
+                .marca(request.getMarca())
+                .build();
+    }
+
+    public static Marca makeMarcaEntityByDTO(MarcaDTO request) {
+        return Marca.builder()
                 .id(request.getId())
                 .marca(request.getMarca())
                 .build();

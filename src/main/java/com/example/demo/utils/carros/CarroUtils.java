@@ -3,6 +3,7 @@ package com.example.demo.utils.carros;
 import com.example.demo.application.dto.CarroDTO;
 import com.example.demo.domain.entities.Carro;
 import com.example.demo.infrastructure.request.carros.*;
+import com.example.demo.utils.marcas.MarcaUtils;
 
 public class CarroUtils {
 
@@ -16,12 +17,14 @@ public class CarroUtils {
                 .id(carro.getId())
                 .nome(update.getNome())
                 .km(update.getKm())
+                .ano(update.getAno())
                 .cor(update.getCor())
                 .preco(update.getPreco())
                 .tipo(update.getTipo())
                 .modelo(update.getModelo())
                 .reservado(update.getReservado())
                 .urlImagem(update.getUrlImagem())
+                .marca(MarcaUtils.makeMarcaEntityByDTO(update.getMarca()))
                 .disabled(false)
                 .build();
 
@@ -43,7 +46,7 @@ public class CarroUtils {
                 .reservado(carro.getReservado())
                 .urlImagem(carro.getUrlImagem())
                 .km(carro.getKm())
-                .marcaId(carro.getMarca().getId())
+                .marca(MarcaUtils.makeMarcaDTOByEntity(carro.getMarca()))
                 .disabled(carro.getDisabled())
                 .build();
     }

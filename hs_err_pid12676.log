@@ -30,7 +30,7 @@
 Command Line: -javaagent:C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2022.1.2\lib\idea_rt.jar=56684:C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2022.1.2\bin -Dfile.encoding=UTF-8 com.example.demo.BackendApplication
 
 Host: Intel(R) Celeron(R) CPU 3865U @ 1.80GHz, 2 cores, 3G,  Windows 10 , 64 bit Build 19041 (10.0.19041.1806)
-Time: Thu Aug  4 15:19:16 2022 Hora Padrão de Caracas elapsed time: 4763.230361 seconds (0d 1h 19m 23s)
+Time: Thu Aug  4 15:19:16 2022 Hora Padrï¿½o de Caracas elapsed time: 4763.230361 seconds (0d 1h 19m 23s)
 
 ---------------  T H R E A D  ---------------
 
