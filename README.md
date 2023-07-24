@@ -1,5 +1,5 @@
 <h1>Prova Verzel - backend</h1>
-<strong>frontend: </strong> <a href="https://github.com/M4TH3US17/prova_frontend">Link do Frontend</a>
+<strong>frontend: </strong> <a href="https://github.com/M4TH3US17/verzel_teste">Link do Frontend</a>
 
 <h1>Ferramentas Usadas</h1>
 <ul>
@@ -16,9 +16,7 @@
 </ul>
 
 <h2>Como Configurar o Projeto?</h2>
-<p>A nossa API está pré-configurada rodando em perfil de teste, na porta <code>8083</code>, e caso queira mudar
-a porta (é opcional) basta acessar o arquivo application-test.properties e alterar o valor 
-na propriedade <code>server.port=</code></p>
+<p>O projeto esta pre-configurado, basta apenas rodar.</p>
 
 <h2>Como Acessar a documentação?</h2>
 <p>Simples, basta executar o projeto em alguma IDE, de preferência no IntelliJ, e digitar
