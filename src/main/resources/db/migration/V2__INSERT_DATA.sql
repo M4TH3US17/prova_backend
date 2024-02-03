@@ -1,3 +1,6 @@
+-- INSERT (USUARIO - ADMIN)
+INSERT INTO usuarios (login, senha, role) VALUES ('admin', '$2a$10$RaHBqPLd5WvGoslX1DNGNOIXdVqzEyUEuqnlL7rrKJ6DDv59HPaYa', 'ROLE_ADMIN');
+
 -- Marcas
  INSERT INTO marcas (marca) VALUES
   ('Audi'),  ('Nissan'),    ('Bmw'),
@@ -74,6 +77,3 @@ INSERT INTO carros (nome, preco, reservado, km, url_imagem, ano, cor, tipo, disa
 INSERT INTO carros (nome, preco, reservado, km, url_imagem, ano, cor, tipo, disabled, marca, modelo) VALUES
 ('MPFI ELEGANCE', 79.999, true, 12101, 'https://seminovosrj.com.br/fotos/348/681011/22.jpg',
 2018, 'PRETO', 'SEDAN', true, 5, 'A5');
-
--- Usuários
-INSERT INTO usuarios (login, senha, role) VALUES ('admin', '$2a$10$RaHBqPLd5WvGoslX1DNGNOIXdVqzEyUEuqnlL7rrKJ6DDv59HPaYa', 'ROLE_ADMIN');
