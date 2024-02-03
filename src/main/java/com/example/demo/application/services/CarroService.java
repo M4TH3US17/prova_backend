@@ -130,7 +130,7 @@ public class CarroService {
             log.info("CarroService :: Iniciando etapa de persistencia...");
             Carro carro = CarroUtils.makeCarroCreatedEntity(request);
             log.info("CarroService :: Salvando carro...");
-            insereMarcaDoCarro(carro, request.getMarca().getId());
+            insereMarcaDoCarro(carro, request.marca().id());
             CarroDTO carroDTO = CarroUtils.makeCarroDTOByEntity(repository.save(carro));
             log.info("CarroService :: Carro cadastrado com sucesso!");
 
@@ -165,7 +165,7 @@ public class CarroService {
             log.info("CarroService :: Carro encontrado na base de dados...");
             Carro carro = CarroUtils.makeCarroUpdatedEntity(request, carroDoBanco.get());
             log.info("CarroService :: Salvando carro atualizado...");
-            insereMarcaDoCarro(carro, request.getMarca().getId());
+            insereMarcaDoCarro(carro, request.marca().id());
             CarroDTO carroDTO = CarroUtils.makeCarroDTOByEntity(repository.save(carro));
             log.info("CarroService :: Carro atualizado com sucesso!");
 

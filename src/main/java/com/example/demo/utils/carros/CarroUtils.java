@@ -9,32 +9,37 @@ public class CarroUtils {
 
 
     /**
-     * Monta uma entidade Exporter para atualização a partir de uma entidade de request UpdateCarroRequest
-     * @return Carro
-     * */
-    public static Carro makeCarroUpdatedEntity(UpdateCarroRequest update, Carro carro) {
-        Carro carroDTO = Carro.builder()
+     * Constrói e retorna uma entidade Carro atualizada com base nos dados fornecidos por uma requisição de atualização (UpdateCarroRequest).
+     *
+     * @param request uma instância de UpdateCarroRequest contendo os dados de atualização do Carro.
+     * @param carro uma instância existente de Carro a ser atualizada.
+     * @return uma entidade Carro atualizada.
+     */
+    public static Carro makeCarroUpdatedEntity(UpdateCarroRequest request, Carro carro) {
+        Carro carroAtualizado = Carro.builder()
                 .id(carro.getId())
-                .nome(update.getNome())
-                .km(update.getKm())
-                .ano(update.getAno())
-                .cor(update.getCor())
-                .preco(update.getPreco())
-                .tipo(update.getTipo())
-                .modelo(update.getModelo())
-                .reservado(update.getReservado())
-                .urlImagem(update.getUrlImagem())
-                .marca(MarcaUtils.makeMarcaEntityByDTO(update.getMarca()))
+                .nome(request.nome())
+                .km(request.km())
+                .ano(request.ano())
+                .cor(request.cor())
+                .preco(request.preco())
+                .tipo(request.tipo())
+                .modelo(request.modelo())
+                .reservado(request.reservado())
+                .urlImagem(request.urlImagem())
+                .marca(MarcaUtils.makeMarcaEntityByDTO(request.marca()))
                 .disabled(false)
                 .build();
 
-        return carroDTO;
+        return carroAtualizado;
     }
 
     /**
-     * Monta um objeto CarroDTO a partir de uma entidade Exporter
-     * @return CarroDTO
-     * */
+     * Constrói e retorna um objeto CarroDTO com base nos dados fornecidos por uma entidade Carro.
+     *
+     * @param carro uma instância de Carro contendo os dados para criação do CarroDTO.
+     * @return um objeto CarroDTO.
+     */
     public static CarroDTO makeCarroDTOByEntity(Carro carro) {
         return CarroDTO.builder()
                 .nome(carro.getNome())
@@ -52,21 +57,24 @@ public class CarroUtils {
     }
 
     /**
-     * Monta um objeto Carro a partir de uma entidade RegisterCarroRequest
-     * @return Carro
-     * */
-    public static Carro makeCarroCreatedEntity(RegisterCarroRequest carro) {
+     * Constrói e retorna uma entidade Carro com base nos dados fornecidos por uma requisição de criação (RegisterCarroRequest).
+     *
+     * @param request uma instância de RegisterCarroRequest contendo os dados para criação do Carro.
+     * @return uma entidade Carro recém-criada.
+     */
+    public static Carro makeCarroCreatedEntity(RegisterCarroRequest request) {
         return Carro.builder()
-                .nome(carro.getNome())
-                .preco(carro.getPreco())
-                .ano(carro.getAno())
-                .tipo(carro.getTipo())
-                .cor(carro.getCor())
-                .modelo(carro.getModelo())
-                .reservado(carro.getReservado())
-                .urlImagem(carro.getUrlImagem())
-                .km(carro.getKm())
+                .nome(request.nome())
+                .preco(request.preco())
+                .ano(request.ano())
+                .tipo(request.tipo())
+                .cor(request.cor())
+                .modelo(request.modelo())
+                .reservado(request.reservado())
+                .urlImagem(request.urlImagem())
+                .km(request.km())
                 .disabled(false)
                 .build();
     }
+
 }

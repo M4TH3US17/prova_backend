@@ -1,10 +1,12 @@
 package com.example.demo.infrastructure.request.marcas;
 
-import com.example.demo.application.dto.MarcaDTO;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import lombok.NoArgsConstructor;
+import lombok.Builder;
 
-@NoArgsConstructor
-@JsonInclude(JsonInclude.Include.NON_NULL)
-public class RegisterMarcaRequest extends MarcaDTO {
+import javax.validation.constraints.NotBlank;
+
+@Builder @JsonInclude(JsonInclude.Include.NON_NULL)
+public record RegisterMarcaRequest(
+        @NotBlank(message = "{marca.nome.not.blank}") String marca
+) {
 }

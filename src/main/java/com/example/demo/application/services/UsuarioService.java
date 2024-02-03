@@ -31,9 +31,9 @@ public class UsuarioService {
     public UsuarioResponse save(RegisterUsuarioRequest request) {
         try {
             log.info("UsuarioService :: Criptogranfado senha...");
-            String senhaCriptografada = passwordEncoder.encode(request.getSenha());
+            String senhaCriptografada = passwordEncoder.encode(request.senha());
             log.info("UsuarioService :: Salvando novo usuario...");
-            Usuario usuario = new Usuario(null, request.getUsername(), senhaCriptografada, RoleUsuario.ROLE_USUARIO);
+            Usuario usuario = new Usuario(null, request.username(), senhaCriptografada, RoleUsuario.ROLE_USUARIO);
             UsuarioDTO usuarioDTO = UsuarioUtils.makeDTOEntityUsuario(repository.save(usuario));
             log.info("UsuarioService :: Usuario salvo com sucesso!");
 

@@ -1,20 +1,13 @@
 package com.example.demo.application.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotBlank;
 
-@Data @NoArgsConstructor @AllArgsConstructor
-@Builder @JsonInclude(JsonInclude.Include.NON_NULL)
-public class MarcaDTO {
-
-    private Long id;
-
-    @NotBlank(message = "{marca.nome.not.blank}")
-    private String marca;
-
-}
+@Builder
+@JsonInclude(JsonInclude.Include.NON_NULL)
+public record MarcaDTO(
+        Long id,
+        @NotBlank(message = "{marca.nome.not.blank}") String marca
+) { }

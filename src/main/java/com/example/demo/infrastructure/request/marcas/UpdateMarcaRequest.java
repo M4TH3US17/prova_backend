@@ -1,10 +1,13 @@
 package com.example.demo.infrastructure.request.marcas;
 
-import com.example.demo.application.dto.MarcaDTO;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import lombok.NoArgsConstructor;
+import lombok.Builder;
 
-@NoArgsConstructor
+import javax.validation.constraints.NotBlank;
+
+@Builder
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class UpdateMarcaRequest extends MarcaDTO {
-}
+public record UpdateMarcaRequest(
+        Long id,
+        @NotBlank(message = "{marca.nome.not.blank}") String marca
+) {}
