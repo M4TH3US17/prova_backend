@@ -28,11 +28,7 @@ public class CarroService {
         Page<Carro> listaDeCarros =  repository.findAllByDisabledFalse(pageable);
 
         if (listaDeCarros.isEmpty()){
-            log.info("CarroService :: Nao há carros cadastrados!");
-            return CarroResponse.builder()
-                    .code(HttpStatus.NOT_FOUND.value())
-                    .message("Nenhum carro localizado!")
-                    .build();
+            return returnsError404NotFoundResponse("Nenhum carro localizado!", new ArrayList<>());
         } else {
             log.info("CarroService :: Lista de carros montada!");
             return CarroResponse.builder()
@@ -50,10 +46,7 @@ public class CarroService {
 
             if (listaDeCarros.isEmpty()) {
                 log.info("CarroService :: Nao foi encontrado nenhum carro cadastrado no ano {}.", ano);
-                return CarroResponse.builder()
-                        .code(HttpStatus.NOT_FOUND.value())
-                        .message("Carro nao localizado!")
-                        .build();
+                return returnsError404NotFoundResponse("Nao foi encontrado nenhum carro!", new ArrayList<>());
             } else {
                 log.info("CarroService :: Lista montada com sucesso!");
                 return CarroResponse.builder()
@@ -64,10 +57,7 @@ public class CarroService {
             }
         } catch (Exception error) {
             log.error("ERROR: " + error);
-            return CarroResponse.builder()
-                    .code(HttpStatus.INTERNAL_SERVER_ERROR.value())
-                    .message("Houve um erro no servidor!")
-                    .build();
+            return returnsError500InternalServerErrorResponse(error);
         }
     }
 
@@ -78,10 +68,7 @@ public class CarroService {
 
             if (listaDeCarros.isEmpty()) {
                 log.info("CarroService :: Nao foi encontrado nenhum carro cuja marca seja {}.", marca);
-                return CarroResponse.builder()
-                        .code(HttpStatus.NOT_FOUND.value())
-                        .message("Carro nao localizado!")
-                        .build();
+                return returnsError404NotFoundResponse("Nao foi encontrado nenhum carro", new ArrayList<>());
             } else {
                 log.info("CarroService :: Carros encontrados com sucesso!.");
                 return CarroResponse.builder()
@@ -92,10 +79,7 @@ public class CarroService {
             }
         } catch (Exception error) {
             log.error("ERROR: " + error);
-            return CarroResponse.builder()
-                    .code(HttpStatus.INTERNAL_SERVER_ERROR.value())
-                    .message("Houve um erro no servidor!")
-                    .build();
+            return returnsError500InternalServerErrorResponse(error);
         }
     }
 
@@ -106,10 +90,8 @@ public class CarroService {
 
             if (listaDeCarros.isEmpty()) {
                 log.info("CarroService :: Nao foi encontrado nenhum carro cujo modelo seja {}.", modelo);
-                return CarroResponse.builder()
-                        .code(HttpStatus.NOT_FOUND.value())
-                        .message("Carros nao localizados!")
-                        .build();
+                return returnsError404NotFoundResponse("Carros de modelo " + modelo + " nao foram localizados!", new ArrayList<>());
+
             } else {
                 log.info("CarroService :: Carros encontrados com sucesso!");
                 return CarroResponse.builder()
@@ -119,11 +101,7 @@ public class CarroService {
                         .build();
             }
         } catch (Exception error) {
-            log.error("ERROR: " + error);
-            return CarroResponse.builder()
-                    .code(HttpStatus.INTERNAL_SERVER_ERROR.value())
-                    .message("Houve um erro no servidor!")
-                    .build();
+            return returnsError500InternalServerErrorResponse(error);
         }
     }
 
@@ -139,18 +117,10 @@ public class CarroService {
                         .message("Segue os dados do carro encontrado").data(carro)
                         .build();
             } else {
-                log.info("CarroService :: Carro nao encontrado!");
-                return CarroResponse.builder()
-                        .code(HttpStatus.NOT_FOUND.value())
-                        .message("Carro nao localizado!")
-                        .build();
+                return returnsError404NotFoundResponse("Nao foi encontrado nenhum carro cujo ID seja " + id, null);
             }
         } catch (Exception error) {
-            log.error("ERROR: " + error);
-            return CarroResponse.builder()
-                    .code(HttpStatus.INTERNAL_SERVER_ERROR.value())
-                    .message("Houve um erro no servidor!")
-                    .build();
+            return returnsError500InternalServerErrorResponse(error);
         }
     }
 
@@ -169,11 +139,7 @@ public class CarroService {
                     .message("Carro salvo com sucesso!")
                     .build();
         } catch(Exception error) {
-            log.error("ERROR: " + error.getLocalizedMessage());
-            return CarroResponse.builder()
-                    .code(HttpStatus.INTERNAL_SERVER_ERROR.value())
-                    .message("Houve erro durante o processo!")
-                    .build();
+            return returnsError500InternalServerErrorResponse(error);
         }
     }
 
@@ -193,18 +159,12 @@ public class CarroService {
         try {
             Optional<Carro> carroDoBanco = repository.findByIdAndDisabledFalse(id);
 
-            if (carroDoBanco.isPresent() == false ) {
-                log.info("CarroService :: Carro nao localizado na base de dados!");
-               return CarroResponse.builder()
-                        .code(HttpStatus.NOT_FOUND.value())
-                        .message("Carro nao localizado na base de dados!!")
-                        .build();
-            }
+            if (carroDoBanco.isPresent() == false )
+               return returnsError404NotFoundResponse("Carro nao localizado na base de dados!!", null);
 
             log.info("CarroService :: Carro encontrado na base de dados...");
             Carro carro = CarroUtils.makeCarroUpdatedEntity(request, carroDoBanco.get());
             log.info("CarroService :: Salvando carro atualizado...");
-            System.out.println(carro);
             insereMarcaDoCarro(carro, request.getMarca().getId());
             CarroDTO carroDTO = CarroUtils.makeCarroDTOByEntity(repository.save(carro));
             log.info("CarroService :: Carro atualizado com sucesso!");
@@ -215,12 +175,25 @@ public class CarroService {
                     .data(carroDTO)
                     .build();
     } catch(Exception error) {
-        log.error("ERROR: " + error.getLocalizedMessage());
-        return CarroResponse.builder()
-                .code(HttpStatus.INTERNAL_SERVER_ERROR.value())
-                .message("Houve erro durante o processo atualizacao!")
-                .build();
+        return returnsError500InternalServerErrorResponse(error);
     }
+    }
+
+
+    /* METODOS PRIVADOS PARA AUXILIAR A CLASSE DE SERVICO */
+    private <T> T returnsError404NotFoundResponse(String message, Object responseBody) {
+        log.info("CartoService :: Não foi possivel encontrar nenhum carro!");
+        int code = HttpStatus.NOT_FOUND.value();
+
+        return (T) new CarroResponse(code, message, responseBody);
+    }
+
+    private <T> T returnsError500InternalServerErrorResponse(Exception error) {
+        log.error(error.getLocalizedMessage());
+        int code = HttpStatus.INTERNAL_SERVER_ERROR.value();
+        String messageError = "Ocorreu um erro desconhecido!";
+
+        return (T) new CarroResponse(code, messageError, error);
     }
 
     private void insereMarcaDoCarro(Carro carro, Long idMarca){

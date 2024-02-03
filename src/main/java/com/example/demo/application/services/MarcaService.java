@@ -22,18 +22,14 @@ public class MarcaService {
     public MarcaResponse findAll() {
         List<Marca> listaDeMarcas = repository.findAll();
 
-        if(listaDeMarcas.isEmpty()) {
-            return MarcaResponse.builder()
-                    .code(HttpStatus.NOT_FOUND.value())
-                    .message("Nenhuma marca encontrada.")
-                    .build();
-        } else {
+        if(listaDeMarcas.isEmpty())
+            return returnsError404NotFoundResponse("Nenhuma marca encontrada.", null);
+
             return MarcaResponse.builder()
                     .code(HttpStatus.OK.value())
                     .message("Segue a lista de marcas!")
                     .data(listaDeMarcas)
                     .build();
-        }
     }
 
     @Transactional
@@ -51,11 +47,23 @@ public class MarcaService {
                     .data(marcaDTO)
                     .build();
         } catch(Exception error) {
-            log.error("ERROR: " + error);
-            return MarcaResponse.builder()
-                    .data(HttpStatus.INTERNAL_SERVER_ERROR.value())
-                    .message("Houve um erro ao salvar marca!")
-                    .build();
+            return returnsError500InternalServerErrorResponse(error);
         }
+    }
+
+    /* METODOS PRIVADOS PARA AUXILIAR A CLASSE DE SERVICO */
+    private <T> T returnsError404NotFoundResponse(String message, Object responseBody) {
+        log.info("MarcaService :: Não foi possivel encontrar nenhuma marca!");
+        int code = HttpStatus.NOT_FOUND.value();
+
+        return (T) new MarcaResponse(code, message, responseBody);
+    }
+
+    private <T> T returnsError500InternalServerErrorResponse(Exception error) {
+        log.error(error.getLocalizedMessage());
+        int code = HttpStatus.INTERNAL_SERVER_ERROR.value();
+        String messageError = "Ocorreu um erro desconhecido!";
+
+        return (T) new MarcaResponse(code, messageError, error);
     }
 }
