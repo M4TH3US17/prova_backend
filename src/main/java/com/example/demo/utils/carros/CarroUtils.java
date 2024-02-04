@@ -1,8 +1,10 @@
 package com.example.demo.utils.carros;
 
 import com.example.demo.application.dto.CarroDTO;
+import com.example.demo.application.services.S3Service;
 import com.example.demo.domain.entities.Carro;
 import com.example.demo.infrastructure.request.carros.*;
+import com.example.demo.utils.Utils;
 import com.example.demo.utils.marcas.MarcaUtils;
 
 public class CarroUtils {
@@ -15,7 +17,7 @@ public class CarroUtils {
      * @param carro uma instância existente de Carro a ser atualizada.
      * @return uma entidade Carro atualizada.
      */
-    public static Carro makeCarroUpdatedEntity(UpdateCarroRequest request, Carro carro) {
+    public static Carro makeCarroUpdatedEntity(UpdateCarroRequest request, Carro carro, S3Service s3Service) {
         Carro carroAtualizado = Carro.builder()
                 .id(carro.getId())
                 .nome(request.nome())
@@ -26,7 +28,7 @@ public class CarroUtils {
                 .tipo(request.tipo())
                 .modelo(request.modelo())
                 .reservado(request.reservado())
-                .urlImagem(request.urlImagem())
+                .urlImagem(Utils.validarImagensParaAtualizacao(request.urlImagem(), carro.getId(), s3Service))
                 .marca(MarcaUtils.makeMarcaEntityByDTO(request.marca()))
                 .disabled(false)
                 .build();
@@ -62,7 +64,7 @@ public class CarroUtils {
      * @param request uma instância de RegisterCarroRequest contendo os dados para criação do Carro.
      * @return uma entidade Carro recém-criada.
      */
-    public static Carro makeCarroCreatedEntity(RegisterCarroRequest request) {
+    public static Carro makeCarroCreatedEntity(RegisterCarroRequest request, Long nextId, S3Service s3Service) {
         return Carro.builder()
                 .nome(request.nome())
                 .preco(request.preco())
@@ -71,7 +73,7 @@ public class CarroUtils {
                 .cor(request.cor())
                 .modelo(request.modelo())
                 .reservado(request.reservado())
-                .urlImagem(request.urlImagem())
+                .urlImagem(Utils.validarImagensParaAtualizacao(request.urlImagem(), nextId, s3Service))
                 .km(request.km())
                 .disabled(false)
                 .build();

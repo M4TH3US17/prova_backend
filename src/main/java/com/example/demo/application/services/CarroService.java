@@ -22,6 +22,7 @@ public class CarroService {
 
     private final CarroRepository repository;
     private final MarcaRepository marcaRepository;
+    private final S3Service s3Service;
 
     public CarroResponse findAllCars(Pageable pageable) {
         log.info("CarroService :: Obtendo todos os carros cadastrados no sistema...");
@@ -128,10 +129,10 @@ public class CarroService {
     public CarroResponse save(RegisterCarroRequest request) throws Exception {
         try {
             log.info("CarroService :: Iniciando etapa de persistencia...");
-            Carro carro = CarroUtils.makeCarroCreatedEntity(request);
+            Carro carroToBeSaved = CarroUtils.makeCarroCreatedEntity(request, repository.findNextId(), s3Service);
             log.info("CarroService :: Salvando carro...");
-            insereMarcaDoCarro(carro, request.marca().id());
-            CarroDTO carroDTO = CarroUtils.makeCarroDTOByEntity(repository.save(carro));
+            insereMarcaDoCarro(carroToBeSaved, request.marca().id());
+            repository.save(carroToBeSaved);
             log.info("CarroService :: Carro cadastrado com sucesso!");
 
             return CarroResponse.builder()
@@ -163,7 +164,7 @@ public class CarroService {
                return returnsError404NotFoundResponse("Carro nao localizado na base de dados!!", null);
 
             log.info("CarroService :: Carro encontrado na base de dados...");
-            Carro carro = CarroUtils.makeCarroUpdatedEntity(request, carroDoBanco.get());
+            Carro carro = CarroUtils.makeCarroUpdatedEntity(request, carroDoBanco.get(), s3Service);
             log.info("CarroService :: Salvando carro atualizado...");
             insereMarcaDoCarro(carro, request.marca().id());
             CarroDTO carroDTO = CarroUtils.makeCarroDTOByEntity(repository.save(carro));
@@ -206,4 +207,6 @@ public class CarroService {
             log.error("ERROR: Marca nao foi localizada!");
         }
     }
+
+
 }
