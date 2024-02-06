@@ -57,8 +57,6 @@ public class S3Service {
     @SneakyThrows(FileNotFoundException.class)
     private String saveS3BucketByFile(File file, String storedFilePath, String defaultBucket) {
         log.info("S3Service :: Iniciando a persistencia da imagem fornecida no bucket");
-        /*amazonS3.putObject(new PutObjectRequest(defaultBucket, storedFilePath, new FileInputStream(file), getMetadata(file))
-                .withCannedAcl(CannedAccessControlList.PublicRead));*/
         amazonS3.putObject(new PutObjectRequest(defaultBucket, storedFilePath, new FileInputStream(file), getMetadata(file)));
         URL s3Url = amazonS3.getUrl(s3Properties.getBucket(), storedFilePath);
         log.info("S3Service :: Imagem salva no bucket com sucesso!");
