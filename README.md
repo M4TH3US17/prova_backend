@@ -7,16 +7,33 @@
   <li>JWT</li>
   <li>Lombok</li>
   <li>Swagger</li>
-  <li>Banco H2</li>
+  <li>PostgreSQL e FlyWay</li>
+  <li>S3 (AWS)</li>
 </ul>
 
 <h1>Pré-requisitos:</h1>
 <ul>
 <li>Java</li>
+<li>PostgreSQL + PgAdmin</li>
 </ul>
 
 <h2>Como Configurar o Projeto?</h2>
-<p>O projeto esta pre-configurado, basta apenas rodar.</p>
+<h4>Crie, na AWS, um Bucket S3 para teste. Apos isso, va no application.properties e sete as seguintes informacoes:</h4>
+<p>
+# Amazon S3 <br>
+<strong>s3.access-key-id:</strong> Sua chave de acesso do AWS IAM. <br>
+<strong>s3.secret-key-id:</strong> Sua chave secreta do AWS IAM. <br>
+<strong>s3.region:</strong> A região do seu bucket (por exemplo, us-east-1).  <br>
+<strong>s3.bucket:</strong> O nome do bucket que você criou.
+</p>
+
+<h4>Configuracao do bando PostgreSQL</h4>
+<p>
+# DEV<br>
+<strong>spring.datasource.url:</strong> Informe a URL do seu banco de dados<br>
+<strong>spring.datasource.username:</strong> Nome de usuário para conexão ao banco<br>
+<strong>spring.datasource.password:</strong> Senha para conexão ao banco
+</p>
 
 <h2>Como Acessar a documentação?</h2>
 <p>Simples, basta executar o projeto no IntelliJ e digitar
