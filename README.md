@@ -30,7 +30,7 @@
 <h4>Configuracao do bando PostgreSQL</h4>
 <p>
 # DEV<br>
-<strong>spring.datasource.url:</strong> Informe a URL do seu banco de dados<br>
+<strong>spring.datasource.url:</strong> Informe a URL do seu banco de dados. (jdbc:postgresql://localhost:5432/{nomeDoBanco})<br>
 <strong>spring.datasource.username:</strong> Nome de usuário para conexão ao banco<br>
 <strong>spring.datasource.password:</strong> Senha para conexão ao banco
 </p>

@@ -27,7 +27,7 @@ public class Carro implements Serializable {
     private Cor cor;
     @Enumerated(EnumType.STRING)
     private Tipo tipo;
-    @ManyToOne @JoinColumn(name = "marca")
+    @ManyToOne @JoinColumn(name = "marca_id")
     private Marca marca;
     private Boolean disabled;
 }
