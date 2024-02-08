@@ -49,7 +49,7 @@ public class S3Service {
         log.info("S3Service :: Iniciando a persistencia do arquivo no bucket");
         String defaultBucket = s3Properties.getBucket();
         log.info("S3Service :: Salvando arquivo no Bucket: " + defaultBucket);
-        String storedFilePath = prefix + "_CARRO_" + id;
+        String storedFilePath = prefix + "_CARRO_" + id + "?timestamp=" + System.currentTimeMillis();
         log.info("S3Service :: Nome do arquivo: " + storedFilePath);
         return saveS3BucketByFile(file, storedFilePath, defaultBucket);
     }
