@@ -18,7 +18,7 @@ CREATE TABLE carros (
     reservado  BOOLEAN                         NOT NULL,
     disabled   BOOLEAN                         NOT NULL,
     url_imagem VARCHAR(255),
-    preco      DECIMAL(10, 2)                  NOT NULL,
+    preco      DOUBLE PRECISION                NOT NULL,
 
    CONSTRAINT pk_carro             PRIMARY KEY (id),
    CONSTRAINT fk_carro_on_marca FOREIGN KEY (marca_id) REFERENCES marcas (id)
@@ -79,7 +79,7 @@ INSERT INTO carros (nome, preco, reservado, km, url_imagem, ano, cor, tipo,  dis
 2021, 'PRATA', 'SEDAN', false, 1, 'A4');
 
 INSERT INTO carros (nome, preco, reservado, km, url_imagem, ano, cor, tipo, disabled, marca_id, modelo) VALUES
-('SL X-GEAR', 51.000, true, 1231, 'https://www.chavesnamao.com.br/carros/rj/nissan-livina-1.8-sl-x-gear-16v-4p/',
+('SL X-GEAR', 51000, true, 1231, 'https://www.chavesnamao.com.br/carros/rj/nissan-livina-1.8-sl-x-gear-16v-4p/',
 2022, 'BRANCO', 'SUV', false, 3, 'A3');
 
 INSERT INTO carros (nome, preco, reservado, km, url_imagem, ano, cor, tipo, disabled, marca_id, modelo) VALUES
