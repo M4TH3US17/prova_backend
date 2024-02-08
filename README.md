@@ -37,7 +37,7 @@
 
 <h2>Como Acessar a documentação?</h2>
 <p>Simples, basta executar o projeto no IntelliJ e digitar
- no seu navegador <code>http://localhost:8083/swagger-ui.html</code>. Em seguida, após abrir 
+ no seu navegador <code>http://localhost:8084/swagger-ui.html</code>. Em seguida, após abrir 
 a documentação, vá em <mark>usuario-controller</mark> na parte de login e informe as credenciais
 (login: admin, senha: admin) para gerar o Bearer Token.</p>
 
